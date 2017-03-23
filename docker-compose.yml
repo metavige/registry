@@ -8,7 +8,18 @@ registry:
   links:
     - redis:redis
   ports:
+    - 5002:5000
+  volumes:
+    - ${PWD}/config.registry.yml:/etc/docker/registry/config.yml
+    - ${PWD}/storage:/var/lib/registry
+
+mirror:
+  restart: always
+  image: registry:2
+  links:
+    - redis:redis
+  ports:
     - 5000:5000
   volumes:
-    - ${PWD}/config.yml:/etc/docker/registry/config.yml
+    - ${PWD}/config.mirror.yml:/etc/docker/registry/config.yml
     - ${PWD}/storage:/var/lib/registry

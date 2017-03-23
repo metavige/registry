@@ -1,0 +1,28 @@
+version: 0.1
+log:
+  fields:
+    service: registry
+storage:
+  cache:
+    blobdescriptor: redis
+  filesystem:
+    rootdirectory: /var/lib/registry
+redis:
+  addr: redis:6379
+  db: 0
+  dialtimeout: 10ms
+  readtimeout: 10ms
+  writetimeout: 10ms
+  pool:
+    maxidle: 16
+    maxactive: 64
+    idletimeout: 300s
+http:
+  addr: :5000
+  headers:
+    X-Content-Type-Options: [nosniff]
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3

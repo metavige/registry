@@ -35,3 +35,18 @@ health:
     interval: 10s
     threshold: 3
 ```
+
+## 追加 private registry
+
+後來思考是否可以把 private registry 與 mirror 放在一起  
+實際測試，如果把 mirror 要當作 private registry  
+`docker push` 會出現以下錯誤：  
+
+```
+Get https://192.168.99.1:5000/v1/_ping: http: server gave HTTP response to HTTPS client
+```
+
+所以，就另外設定一組 registry，`config.registry.yml` 裡面少了 proxy 的設定  
+我這邊目前是偷懶，把 registry storage 都放在同一個地方  
+這樣的缺點是，當你自已有 tag 到官方 hub 所提供的同名 image，可能你就會蓋掉 mirror 裡面的檔案 (沒有實測，但是還是分開比較好)   
+

@@ -1,10 +1,12 @@
 version: 0.1
+log:
+  fields:
+    service: registry
 storage:
-  filesystem:
-    rootdirectory: /var/lib/registry
-    maxthreads: 100
   cache:
     blobdescriptor: redis
+  filesystem:
+    rootdirectory: /var/lib/registry
 redis:
   addr: redis:6379
   db: 0
@@ -15,5 +17,14 @@ redis:
     maxidle: 16
     maxactive: 64
     idletimeout: 300s
+http:
+  addr: :5000
+  headers:
+    X-Content-Type-Options: [nosniff]
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3
 proxy:
   remoteurl: https://registry-1.docker.io

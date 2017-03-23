@@ -1,16 +1,14 @@
-# redis:
-#   restart: always
-#   image: redis
+redis:
+  restart: always
+  image: redis
 
 registry:
   restart: always
   image: registry:2
-  # links:
-  #   - redis:redis
+  links:
+    - redis:redis
   ports:
     - 5000:5000
-  environment:
-    - "REGISTRY_PROXY_REMOTEURL=https://registry-1.docker.io"
   volumes:
-    # - ${PWD}/config.yml:/etc/docker/registry/config.yml
-    - ${PWD}:/var/lib/registry
+    - ${PWD}/config.yml:/etc/docker/registry/config.yml
+    - ${PWD}/storage:/var/lib/registry

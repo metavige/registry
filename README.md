@@ -17,3 +17,5 @@
 ### persistent
   
 同上，我採用 config.yml 設定目前不能運作  
+但是改用 environment 就可以  
+如果要改變存放位置，只需要變更 docker-compose.yml 中 `${PWD}` 的位置就可以  

@@ -1,25 +1,29 @@
-redis:
-  restart: always
-  image: redis
+version: '2'
+services:
+  redis:
+    restart: always
+    image: redis
 
-registry:
-  restart: always
-  image: registry:2
-  links:
-    - redis:redis
-  ports:
-    - 5002:5000
-  volumes:
-    - ${PWD}/config.registry.yml:/etc/docker/registry/config.yml
-    - ${PWD}/storage:/var/lib/registry
+  # registry:
+  #   restart: always
+  #   image: registry:2
+  #   links:
+  #     - redis:redis
+  #   ports:
+  #     - 5002:5000
+  #   volumes:
+  #     - ${PWD}/config.registry.yml:/etc/docker/registry/config.yml
+  #     - ${PWD}/storage:/var/lib/registry
 
-mirror:
-  restart: always
-  image: registry:2
-  links:
-    - redis:redis
-  ports:
-    - 5000:5000
-  volumes:
-    - ${PWD}/config.mirror.yml:/etc/docker/registry/config.yml
-    - ${PWD}/storage:/var/lib/registry
+  mirror:
+    restart: always
+    image: registry:2
+    links:
+      - redis:redis
+    ports:
+      - 5000:5000
+    volumes:
+      - ${PWD}/config.mirror.yml:/etc/docker/registry/config.yml
+      - ${PWD}/storage:/var/lib/registry
+    depends_on:
+      - redis
